@@ -1,0 +1,7 @@
+name: BalloonSystem
+main: me.arjona.balloons.Main
+version: 1.0
+author: Arjona
+commands:
+  balloon:
+    description: Balloon command
