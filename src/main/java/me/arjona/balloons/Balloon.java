@@ -42,7 +42,7 @@ public class Balloon {
         ((EntityInsentient)((CraftEntity)bat).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5D);
 
 
-        slime.setCustomNameVisible(false);
+        slime.setCustomNameVisible(false);asd
         slime.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
         /*slime.setSize(-2);*/
         ((CraftEntity)slime).getHandle().setSize(-2, -2);
