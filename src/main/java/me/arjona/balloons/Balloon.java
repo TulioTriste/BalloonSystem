@@ -18,7 +18,7 @@ public class Balloon {
     private final Player player;
     private final Heads head = Heads.BLUE_BALLOON;
 
-    private final Bat bat;
+    private final BatEntity bat;
     private final Slime slime;
     private final ArmorStand armorStand;
 
@@ -27,25 +27,26 @@ public class Balloon {
     public Balloon(Main plugin, Player player) {
         this.player = player;
 
-        this.bat = player.getWorld().spawn(player.getLocation(), Bat.class);
+        this.bat = BatEntity.spawn(player);
         this.slime = player.getWorld().spawn(player.getLocation(), Slime.class);
         this.armorStand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
 
+        Bat batEntity = (Bat) bat.getBukkitEntity();
+
         bat.setCustomNameVisible(false);
-        bat.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
+        batEntity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
+
+        player.sendMessage("aaaa");
 
         // set pathfinder
-        /*EntityInsentient entity = ((EntityInsentient)((CraftEntity)bat).getHandle());
-        entity.goalSelector.a(1, new PathfinderFlyer(entity, (EntityLiving) ((CraftEntity)player).getHandle()));*/
+        /*EntityInsentient batEntityIns = ((EntityInsentient)((CraftEntity)batEntity).getHandle());
+        batEntityIns.goalSelector.a(1, new PathfinderFlyer(batEntityIns, (EntityLiving) ((CraftEntity)player).getHandle()));*/
 
-        /*((EntityInsentient)((CraftEntity)bat).getHandle()).getAttributeInstance(GenericAttributes.)*/
-        ((EntityInsentient)((CraftEntity)bat).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5D);
+        //((EntityInsentient)((CraftEntity)bat).getHandle()).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.001D);
 
-
-        slime.setCustomNameVisible(false);asd
+        slime.setCustomNameVisible(false);
         slime.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
-        /*slime.setSize(-2);*/
-        ((CraftEntity)slime).getHandle().setSize(-2, -2);
+        slime.setSize(-2);
 
         armorStand.setCustomNameVisible(false);
         armorStand.setSmall(true);
@@ -53,22 +54,38 @@ public class Balloon {
         armorStand.setHelmet(plugin.getBalloonSkull(head));
 
         slime.setPassenger(armorStand);
-        bat.setPassenger(slime);
+        batEntity.setPassenger(slime);
 
-        NBTTagCompound nbtNoAi = new NBTTagCompound();
+        /*NBTTagCompound nbtNoAi = new NBTTagCompound();
         nbtNoAi.setBoolean("noAI", true);
 
-        ((CraftEntity)slime).getHandle().f(nbtNoAi);
+        ((CraftEntity)slime).getHandle().f(nbtNoAi);*/
 
-        NBTTagCompound nbtSilent = new NBTTagCompound();
+        /*NBTTagCompound nbtSilent = new NBTTagCompound();
         nbtSilent.setBoolean("Silent", true);
 
-        ((CraftEntity)slime).getHandle().f(nbtSilent);
+        //((CraftEntity)slime).getHandle().f(nbtSilent);
 
         nbtSilent.setFloat("flySpeed", 0.05F);
-        ((CraftEntity)bat).getHandle().f(nbtSilent);
-        ((EntityInsentient) ((CraftEntity)bat).getHandle()).a(nbtSilent);
+        ((CraftEntity)bat).getHandle().f(nbtSilent);*/
+        //((EntityInsentient) ((CraftEntity)bat).getHandle()).a(nbtSilent);
 
-        bat.setLeashHolder(player);
+        batEntity.setLeashHolder(player);
+    }
+
+    public boolean tick() {
+        if (bat.getBukkitEntity().isDead() || slime.isDead() || armorStand.isDead()) {
+            die();
+            return false;
+        }
+
+
+        return true;
+    }
+
+    public void die() {
+        bat.getBukkitEntity().remove();
+        slime.remove();
+        armorStand.remove();
     }
 }

@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.UUID;
 
 @Getter
-public class BalloonRunnable /*extends BukkitRunnable*/ {
+public class BalloonRunnable extends BukkitRunnable {
 
-    /*private final Map<UUID, BalloonEntity> balloonEntity;
+    private final Map<UUID, Balloon> balloonEntity;
 
     public BalloonRunnable(Main plugin) {
         this.balloonEntity = Maps.newHashMap();
@@ -19,20 +19,22 @@ public class BalloonRunnable /*extends BukkitRunnable*/ {
 
     @Override
     public void run() {
-        for (Map.Entry<UUID, BalloonEntity> uuidBalloonEntityEntry : balloonEntity.entrySet()) {
+        for (Map.Entry<UUID, Balloon> uuidBalloonEntityEntry : balloonEntity.entrySet()) {
             UUID uuid = uuidBalloonEntityEntry.getKey();
-            BalloonEntity balloonEntity = uuidBalloonEntityEntry.getValue();
+            Balloon balloon = uuidBalloonEntityEntry.getValue();
 
-            if (balloonEntity == null || !balloonEntity.isAlive()) {
+            if (balloon == null) {
                 this.balloonEntity.remove(uuid);
                 return;
             }
 
             if (Bukkit.getPlayer(uuid) == null) {
+                this.balloonEntity.remove(uuid);
+            }
 
-                balloonEntity.die();
+            if (!balloon.tick()) {
                 this.balloonEntity.remove(uuid);
             }
         }
-    }*/
+    }
 }
