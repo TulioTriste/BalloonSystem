@@ -1,4 +1,4 @@
-package me.arjona.balloons;
+package me.arjona.balloons.impl;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

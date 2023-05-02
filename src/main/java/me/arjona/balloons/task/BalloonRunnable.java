@@ -1,7 +1,8 @@
-package me.arjona.balloons;
+package me.arjona.balloons.task;
 
-import com.google.common.collect.Maps;
 import lombok.Getter;
+import me.arjona.balloons.impl.Balloon;
+import me.arjona.balloons.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -11,29 +12,31 @@ import java.util.UUID;
 @Getter
 public class BalloonRunnable extends BukkitRunnable {
 
-    private final Map<UUID, Balloon> balloonEntity;
+    private final Main plugin;
 
     public BalloonRunnable(Main plugin) {
-        this.balloonEntity = Maps.newHashMap();
+        this.plugin = plugin;
+        System.out.println("BalloonRunnable created!");
     }
 
     @Override
     public void run() {
-        for (Map.Entry<UUID, Balloon> uuidBalloonEntityEntry : balloonEntity.entrySet()) {
+        for (Map.Entry<UUID, Balloon> uuidBalloonEntityEntry : plugin.getBalloons().entrySet()) {
             UUID uuid = uuidBalloonEntityEntry.getKey();
             Balloon balloon = uuidBalloonEntityEntry.getValue();
 
             if (balloon == null) {
-                this.balloonEntity.remove(uuid);
+                plugin.getBalloons().remove(uuid);
                 return;
             }
 
             if (Bukkit.getPlayer(uuid) == null) {
-                this.balloonEntity.remove(uuid);
+                plugin.getBalloons().remove(uuid);
+                return;
             }
 
             if (!balloon.tick()) {
-                this.balloonEntity.remove(uuid);
+                plugin.getBalloons().remove(uuid);
             }
         }
     }
