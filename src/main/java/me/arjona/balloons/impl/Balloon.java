@@ -6,18 +6,22 @@ import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
+
 @Getter
 public class Balloon {
 
     private final Player player;
-    private final Heads head = Heads.BLUE_BALLOON;
-
     private final ArmorStand armorStand;
 
     private final boolean active = false;
 
-    public Balloon(Main plugin, Player player) {
+    private Body body = new Body(Heads.BLUE_BALLOON, null);
+
+    public Balloon(Main plugin, Player player, @Nullable Body body) {
         this.player = player;
+
+        if (body != null) this.body = body;
 
         this.armorStand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
 
@@ -26,7 +30,8 @@ public class Balloon {
         armorStand.setSmall(true);
         armorStand.setVisible(false);
         armorStand.setBasePlate(false);
-        armorStand.setHelmet(plugin.getBalloonSkull(head));
+
+        this.body.apply(plugin, this);
     }
 
     public boolean tick() {
@@ -36,10 +41,20 @@ public class Balloon {
             return false;
         }
 
-        Location pLoc = player.getLocation();
+        Location location = player.getLocation();
+        double x = location.getX(), y = location.getY(), z = location.getZ();
+        float yaw = location.getYaw();
 
-        armorStand.teleport(pLoc.subtract(pLoc.getDirection().normalize().multiply(2).setY(0)));
+        // Calcular la dirección en la que está mirando el jugador
+        double radians = Math.toRadians(yaw), xDirection = -Math.sin(radians), zDirection = Math.cos(radians);
 
+        // Calcular la ubicación detrás del jugador
+        double teleportX = x + (xDirection * -1), teleportZ = z + (zDirection * -1);
+
+        // Teletransportarse a la ubicación detrás del jugador
+        Location teleportLocation = new Location(location.getWorld(), teleportX, y, teleportZ, yaw, 0);
+
+        armorStand.teleport(teleportLocation);
         return true;
     }
 
