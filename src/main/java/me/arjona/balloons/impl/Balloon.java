@@ -7,6 +7,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
+import java.util.concurrent.CompletableFuture;
 
 @Getter
 public class Balloon {
@@ -31,34 +32,42 @@ public class Balloon {
         armorStand.setVisible(false);
         armorStand.setBasePlate(false);
 
+        // invulnerable
+        /*NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        nbtTagCompound.setBoolean("Invulnerable", true);
+        ((CraftEntity) armorStand).getHandle().f(nbtTagCompound);*/
+
         this.body.apply(plugin, this);
     }
 
-    public boolean tick() {
+    public boolean tick(Main plugin) {
         if (armorStand.isDead()) {
-            die();
-            player.sendMessage("isdead??????????");
+            die(plugin);
             return false;
         }
 
-        Location location = player.getLocation();
-        double x = location.getX(), y = location.getY(), z = location.getZ();
-        float yaw = location.getYaw();
-
-        // Calcular la dirección en la que está mirando el jugador
-        double radians = Math.toRadians(yaw), xDirection = -Math.sin(radians), zDirection = Math.cos(radians);
-
-        // Calcular la ubicación detrás del jugador
-        double teleportX = x + (xDirection * -1), teleportZ = z + (zDirection * -1);
-
-        // Teletransportarse a la ubicación detrás del jugador
-        Location teleportLocation = new Location(location.getWorld(), teleportX, y, teleportZ, yaw, 0);
-
-        armorStand.teleport(teleportLocation);
+        armorStand.teleport(calculateLoc(player).join());
         return true;
     }
 
-    public void die() {
+    private CompletableFuture<Location> calculateLoc(Player player) {
+        return CompletableFuture.supplyAsync(() -> {
+            Location location = player.getLocation();
+            double x = location.getX(), y = location.getY(), z = location.getZ();
+            float yaw = location.getYaw();
+
+            // Calcular la dirección en la que está mirando el jugador
+            double radians = Math.toRadians(yaw), xDirection = -Math.sin(radians), zDirection = Math.cos(radians);
+
+            // Calcular la ubicación detrás del jugador
+            double teleportX = x + (xDirection * -1), teleportZ = z + (zDirection * -1);
+
+            return new Location(location.getWorld(), teleportX, y, teleportZ, yaw, 0);
+        });
+    }
+
+    public void die(Main plugin) {
+        plugin.getBalloons().remove(player.getUniqueId());
         armorStand.remove();
     }
 }

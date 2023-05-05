@@ -35,7 +35,7 @@ public class BalloonRunnable extends BukkitRunnable {
                 return;
             }
 
-            if (!balloon.tick()) {
+            if (!balloon.tick(plugin)) {
                 plugin.getBalloons().remove(uuid);
             }
         }
