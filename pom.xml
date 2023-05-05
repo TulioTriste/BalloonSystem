@@ -38,10 +38,17 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--libraries-->
         <dependency>
             <groupId>com.jonahseguin</groupId>
             <artifactId>drink</artifactId>
             <version>1.0.5</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.arjona.utilities</groupId>
+            <artifactId>Arjona-Utilities</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
@@ -78,10 +85,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.0.0</version>
-                <configuration>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <shadedArtifactAttached>false</shadedArtifactAttached>
-                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -90,6 +93,22 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <shadedArtifactAttached>false</shadedArtifactAttached>
+
+                    <relocations>
+                        <relocation>
+                            <pattern>com.jonahseguin.drink</pattern>
+                            <shadedPattern>me.arjona.balloons.utilities.drink</shadedPattern>
+                        </relocation>
+
+                        <relocation>
+                            <pattern>me.arjona.customutilities</pattern>
+                            <shadedPattern>me.arjona.balloons.utilities</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
             </plugin>
         </plugins>
     </build>
