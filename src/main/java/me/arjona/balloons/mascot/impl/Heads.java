@@ -7,5 +7,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Heads {
 
-    private final String texture;
+    private final String displayName, texture;
 }

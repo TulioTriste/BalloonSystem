@@ -20,7 +20,7 @@ public class Body {
     private final Heads head;
     private ItemStack chestPlate;
 
-    public void apply(Main plugin, Mascot mascot) {
+    public void apply(Mascot mascot) {
         mascot.getArmorStand().setHelmet(getBalloonSkull());
 
         if (chestPlate != null) mascot.getArmorStand().setChestplate(chestPlate);

@@ -41,7 +41,7 @@ public class Mascot {
         armorStand.setVisible(false);
         armorStand.setBasePlate(false);
 
-        this.body.apply(plugin, this);
+        this.body.apply(this);
     }
 
     public boolean tick(MascotManager mascotManager) {
