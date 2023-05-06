@@ -8,6 +8,7 @@ import lombok.Getter;
 import me.arjona.balloons.commands.TestCommand;
 import me.arjona.balloons.mascot.MascotManager;
 import me.arjona.customutilities.file.FileConfig;
+import me.arjona.customutilities.menu.listener.MenuListener;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,6 +26,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
         registerConfig();
 
         registerManagers();
+        registerListener();
         registerCommands();
     }
 
@@ -34,6 +36,10 @@ public class Main extends JavaPlugin implements CommandExecutor {
 
     private void registerManagers() {
         this.mascotManager = new MascotManager(this);
+    }
+
+    private void registerListener() {
+        new MenuListener(this);
     }
 
     private void registerCommands() {

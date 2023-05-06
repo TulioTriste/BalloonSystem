@@ -24,7 +24,7 @@ public class MascotManager {
     private final Map<UUID, Mascot> mascots;
     private final MascotRunnable mascotRunnable;
 
-    private final Set<Body> bodies = Sets.newHashSet();
+    private final Set<Body> bodies = Sets.newConcurrentHashSet();
 
     public MascotManager(Main plugin) {
         mascots = Maps.newHashMap();

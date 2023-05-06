@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import me.arjona.balloons.Main;
 import me.arjona.balloons.mascot.impl.Mascot;
 import me.arjona.balloons.mascot.impl.Body;
+import me.arjona.balloons.mascot.menu.SelectMascotMenu;
 import me.arjona.customutilities.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,7 +17,8 @@ public class TestCommand {
 
     @Command(name = "", desc = "Test command")
     public void test(Main plugin, @Sender Player player) {
-        plugin.getMascotManager().getMascots().put(player.getUniqueId(), new Mascot(plugin, player, plugin.getMascotManager().getDefaultBody()));
-        player.sendMessage(CC.RED + "Balloon spawned!");
+        new SelectMascotMenu(plugin.getMascotManager()).openMenu(player);
+        /*plugin.getMascotManager().getMascots().put(player.getUniqueId(), new Mascot(plugin, player, plugin.getMascotManager().getDefaultBody()));
+        player.sendMessage(CC.RED + "Balloon spawned!");*/
     }
 }
