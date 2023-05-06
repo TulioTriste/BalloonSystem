@@ -1,0 +1,49 @@
+# Follow this format
+#
+# <balloon category 1>:
+#   <balloon name 1>:
+#     displayName: <balloon displayName>
+#     chestPlate: <balloon chestplate material>
+#     texture: <balloon texture>
+#   <balloon name 2>:
+#     displayName: <balloon displayName>
+#     chestPlate: <balloon chestplate material>
+#     texture: <balloon texture>
+# <balloon category 2>:
+#   <balloon name 1>:
+#     displayName: <balloon displayName>
+#     chestPlate: <balloon chestplate material>
+#     texture: <balloon texture>
+#   <balloon name 2>:
+#     displayName: <balloon displayName>
+#     chestPlate: <balloon chestplate material>
+#     texture: <balloon texture>
+
+Balloons:
+  Red_Balloon:
+    displayName: "&cRed Balloon"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODM1ZWY5MjMwMDMxNzY5YTJlODE5MmFiNDZhMTcxNDQxMGQ1NmMzYjliMzhhMDMwMmEwNThlNDc5NzNkN2M0ZCJ9fX0="
+  Orange_Balloon:
+    displayName: "&6Orange Balloon"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjE0ODUzNDkwMDZlZDFjOTFiNzk1OWFmZjQ0ZjMzMGRkYWMzNWUzZDlhOTllNGE4MjA1MWY5ODZlY2RhNDc1NSJ9fX0="
+  Bellow_Balloon:
+    displayName: "&eYellow Balloon"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODdiOTcyZjAwOGQ5ZWNlYjAzNGJkNjY0ZmY5ZTk5M2UxNDJlNmUxNjNmYTJiMTI1NzM4NTIwNTllOWJmMmU5YyJ9fX0="
+  Green_Balloon:
+    displayName: "&aGreen Balloon"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc1MDdmNjY2ZWFmZGNhYzY0MGUxM2JiMDZjNGY1NjA0ZGRmYzNmYWJjZjQ5NmU1MzBiZDkxMzgwODQ0ZjVmOSJ9fX0="
+  Light_Blue_Balloon:
+    displayName: "&bLight Blue Balloon"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2UyOGE0OWNmMjNhNTM0NTM1YmU3MzZiOTA3NzJiMDg5NDE3MjI0YzgyZTIwMTE0NGRhNzEzZWE0ZWExNjdmNSJ9fX0="
+  Blue_Balloon:
+    displayName: "&9Blue Balloon"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODhhMGY3YmQzZDU4YzU4ZmI5NWU0OGIyYjQ0OTIzZjVlYWEyYzFkNTRkY2Q3MmZhN2NlZmNiYmMxZDRjODFhZCJ9fX0="
+  Purple_Balloon:
+    displayName: "&5Purple Balloon"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWY5NTM0MWE1ZjA4ZDI1MGMwOTkzMzA3MmY5ZTIxNDhlZTk5NTZmZjNhMGViNGYyOTNjMGI3OTQzMzc2MjZiNSJ9fX0="
+  Magenta_Balloon:
+    displayName: "&dMagenta Balloon"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmZlODIwZDY5NWIwODA4YzIxZjM0YTliNTA4Y2M2ODM1NmNiY2Y4YjY3YzgwYTM2NWEzYzU5ZDg1NTM0YTk2OSJ9fX0="
+  Pink_Balloon:
+    displayName: "&dPink Balloon"
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGU2MzY3MmJhNmI5NWEwOGE0ODg3YzljOGUyMjFjZTUwNGYzNTFjNjcxMzE0NjgzYmNkNjExYjQ4ODkwNjczNyJ9fX0="

@@ -3,6 +3,7 @@ package me.arjona.balloons.task;
 import lombok.Getter;
 import me.arjona.balloons.impl.Balloon;
 import me.arjona.balloons.Main;
+import me.arjona.customutilities.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -16,7 +17,7 @@ public class BalloonRunnable extends BukkitRunnable {
 
     public BalloonRunnable(Main plugin) {
         this.plugin = plugin;
-        System.out.println("BalloonRunnable created!");
+        Logger.log("BalloonRunnable created!");
     }
 
     @Override

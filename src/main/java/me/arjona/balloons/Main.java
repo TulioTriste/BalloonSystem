@@ -10,13 +10,9 @@ import com.mojang.authlib.properties.Property;
 import lombok.Getter;
 import me.arjona.balloons.commands.TestCommand;
 import me.arjona.balloons.impl.Balloon;
-import me.arjona.balloons.impl.Heads;
 import me.arjona.balloons.task.BalloonRunnable;
-import net.minecraft.server.v1_8_R3.EntityBat;
-import net.minecraft.server.v1_8_R3.EntityInsentient;
-import net.minecraft.server.v1_8_R3.EntityTypes;
+import me.arjona.customutilities.file.FileConfig;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,9 +21,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -37,14 +30,22 @@ public class Main extends JavaPlugin implements CommandExecutor {
     private Map<UUID, Balloon> balloons;
     private BalloonRunnable balloonRunnable;
 
+    private FileConfig balloonConfig;
+
     @Override
     public void onEnable() {
         balloons = Maps.newHashMap();
+
+        registerConfig();
 
         registerCommands();
 
         getServer().getScheduler().scheduleSyncRepeatingTask(this, balloonRunnable = new BalloonRunnable(this),
                 1L, 1L);
+    }
+
+    private void registerConfig() {
+        this.balloonConfig = new FileConfig(this, "balloons.yml");
     }
 
     private void registerCommands() {

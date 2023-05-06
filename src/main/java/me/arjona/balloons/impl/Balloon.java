@@ -2,7 +2,9 @@ package me.arjona.balloons.impl;
 
 import lombok.Getter;
 import me.arjona.balloons.Main;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 
@@ -26,16 +28,16 @@ public class Balloon {
 
         this.armorStand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
 
+        // invulnerable
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        nbtTagCompound.setBoolean("Invulnerable", true);
+        ((CraftEntity) armorStand).getHandle().f(nbtTagCompound);
+
         armorStand.setCustomNameVisible(false);
         armorStand.setGravity(false);
         armorStand.setSmall(true);
         armorStand.setVisible(false);
         armorStand.setBasePlate(false);
-
-        // invulnerable
-        /*NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        nbtTagCompound.setBoolean("Invulnerable", true);
-        ((CraftEntity) armorStand).getHandle().f(nbtTagCompound);*/
 
         this.body.apply(plugin, this);
     }
@@ -46,11 +48,11 @@ public class Balloon {
             return false;
         }
 
-        armorStand.teleport(calculateLoc(player).join());
+        armorStand.teleport(calcLoc(player).join());
         return true;
     }
 
-    private CompletableFuture<Location> calculateLoc(Player player) {
+    private CompletableFuture<Location> calcLoc(Player player) {
         return CompletableFuture.supplyAsync(() -> {
             Location location = player.getLocation();
             double x = location.getX(), y = location.getY(), z = location.getZ();
@@ -67,7 +69,7 @@ public class Balloon {
     }
 
     public void die(Main plugin) {
-        plugin.getBalloons().remove(player.getUniqueId());
+        //plugin.getBalloons().remove(player.getUniqueId());
         armorStand.remove();
     }
 }

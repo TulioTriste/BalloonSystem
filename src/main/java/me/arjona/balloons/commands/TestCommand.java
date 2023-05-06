@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import me.arjona.balloons.Main;
 import me.arjona.balloons.impl.Balloon;
 import me.arjona.balloons.impl.Body;
-import me.arjona.balloons.impl.Heads;
 import me.arjona.customutilities.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
