@@ -97,6 +97,10 @@
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <shadedArtifactAttached>false</shadedArtifactAttached>
 
+                    <!-- remove unused classes -->
+                    <minimizeJar>true</minimizeJar>
+
+                    <!-- relocate packages to prevent bug with other own plugins -->
                     <relocations>
                         <relocation>
                             <pattern>com.jonahseguin.drink</pattern>
