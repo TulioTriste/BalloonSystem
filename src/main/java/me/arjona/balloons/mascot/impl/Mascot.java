@@ -2,7 +2,6 @@ package me.arjona.balloons.mascot.impl;
 
 import lombok.Getter;
 import me.arjona.balloons.Main;
-import me.arjona.balloons.mascot.MascotManager;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
@@ -15,6 +14,8 @@ import java.util.concurrent.CompletableFuture;
 @Getter
 public class Mascot {
 
+    private final Main plugin;
+
     private final Player player;
     private final ArmorStand armorStand;
 
@@ -23,6 +24,7 @@ public class Mascot {
     private final Body body;
 
     public Mascot(Main plugin, Player player, @Nullable Body body) {
+        this.plugin = plugin;
         this.player = player;
 
         if (body != null) this.body = body;
@@ -44,9 +46,9 @@ public class Mascot {
         this.body.apply(this);
     }
 
-    public boolean tick(MascotManager mascotManager) {
+    public boolean tick() {
         if (armorStand.isDead()) {
-            die(mascotManager);
+            die();
             return false;
         }
 
@@ -70,8 +72,8 @@ public class Mascot {
         });
     }
 
-    public void die(MascotManager mascotManager) {
-        //plugin.getBalloons().remove(player.getUniqueId());
+    public void die() {
         armorStand.remove();
+        plugin.getMascotManager().getMascots().remove(player.getUniqueId());
     }
 }

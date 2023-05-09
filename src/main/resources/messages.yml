@@ -1,0 +1,27 @@
+mascots_lore:
+  used:
+    - "&7&m------------------------------"
+    - "&6You are already using this Mascot!"
+    - ""
+    - "&cClick to remove!"
+    - "&7&m------------------------------"
+  unused:
+    - "&7&m------------------------------"
+    - "&6You have this Mascot unlocked!"
+    - ""
+    - "&aClick to use!"
+    - "&7&m------------------------------"
+  locked:
+    - "&7&m------------------------------"
+    - "&cYou do not have access to!"
+    - "&cthis Mascot, purchase it at"
+    - "&cstore.example.com!"
+    - "&7&m------------------------------"
+
+mascots_message:
+  unequipped:
+    - "&cYou are already using this Mascot!"
+  equip:
+    - "&aYou are now using the &6{name} &aMascot!"
+  remove:
+    - "&cYou are no longer using a Mascot!"

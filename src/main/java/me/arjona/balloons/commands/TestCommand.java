@@ -17,7 +17,7 @@ public class TestCommand {
 
     @Command(name = "", desc = "Test command")
     public void test(Main plugin, @Sender Player player) {
-        new SelectMascotMenu(plugin.getMascotManager()).openMenu(player);
+        new SelectMascotMenu(plugin, plugin.getMascotManager()).openMenu(player);
         /*plugin.getMascotManager().getMascots().put(player.getUniqueId(), new Mascot(plugin, player, plugin.getMascotManager().getDefaultBody()));
         player.sendMessage(CC.RED + "Balloon spawned!");*/
     }

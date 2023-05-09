@@ -17,7 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 @Getter
 public class Main extends JavaPlugin implements CommandExecutor {
 
-    private FileConfig balloonConfig;
+    private FileConfig balloonConfig, messagesConfig;
 
     private MascotManager mascotManager;
 
@@ -32,6 +32,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
 
     private void registerConfig() {
         this.balloonConfig = new FileConfig(this, "balloons.yml");
+        this.messagesConfig = new FileConfig(this, "messages.yml");
     }
 
     private void registerManagers() {

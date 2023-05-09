@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.arjona.customutilities.CC;
 import me.arjona.customutilities.compatibility.material.CompatibleMaterial;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class Body {
 
     private final Heads head;
+    private final String name, displayName;
     private ItemStack chestPlate;
 
     public void apply(Mascot mascot) {
@@ -29,7 +31,7 @@ public class Body {
         ItemStack skull = new ItemStack(CompatibleMaterial.HUMAN_SKULL.getMaterial(), 1, (short) 3);
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
 
-        skullMeta.setDisplayName(CC.translate(head.getDisplayName()));
+        skullMeta.setDisplayName(CC.translate(displayName));
 
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
         profile.getProperties().put("textures", new Property("textures", head.getTexture()));
@@ -44,5 +46,13 @@ public class Body {
 
         skull.setItemMeta(skullMeta);
         return skull;
+    }
+
+    public boolean isUnlocked(Player player) {
+        return player.isOp() || player.hasPermission("*") || player.hasPermission(getPermission());
+    }
+
+    public String getPermission() {
+        return "balloons.mascot." + name.toLowerCase().replace(" ", "_");
     }
 }

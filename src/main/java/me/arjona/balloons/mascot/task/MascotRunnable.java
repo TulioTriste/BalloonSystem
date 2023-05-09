@@ -35,7 +35,7 @@ public class MascotRunnable implements Runnable {
                 return;
             }
 
-            if (!mascot.tick(mascotManager)) {
+            if (!mascot.tick()) {
                 mascotManager.getMascots().remove(uuid);
             }
         }
