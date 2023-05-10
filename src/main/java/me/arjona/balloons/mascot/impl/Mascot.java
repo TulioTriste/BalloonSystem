@@ -3,6 +3,7 @@ package me.arjona.balloons.mascot.impl;
 import lombok.Getter;
 import me.arjona.balloons.Main;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.ArmorStand;
@@ -22,6 +23,9 @@ public class Mascot {
     private final boolean active = false;
 
     private final Body body;
+
+
+    private boolean particle = true;
 
     public Mascot(Main plugin, Player player, @Nullable Body body) {
         this.plugin = plugin;
@@ -53,6 +57,10 @@ public class Mascot {
         }
 
         armorStand.teleport(calcLoc(player).join());
+
+        if (particle)
+            playParticles().join();
+
         return true;
     }
 
@@ -69,6 +77,11 @@ public class Mascot {
             double teleportX = x + (xDirection * -1), teleportZ = z + (zDirection * -1);
 
             return new Location(location.getWorld(), teleportX, y, teleportZ, yaw, 0);
+
+    private CompletableFuture<Void> playParticles() {
+        return CompletableFuture.runAsync(() -> {
+            Location location = armorStand.getLocation().add(0, 0.3, 0);
+            location.getWorld().spigot().playEffect(location, Effect.CLOUD, 0, 0, 0, 0, 0, 0, 1, 1);
         });
     }
 
