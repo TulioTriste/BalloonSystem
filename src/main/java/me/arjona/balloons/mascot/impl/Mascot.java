@@ -24,6 +24,8 @@ public class Mascot {
 
     private final Body body;
 
+    private int i = 0;
+    private boolean up = true;
 
     private boolean particle = true;
 
@@ -56,6 +58,20 @@ public class Mascot {
             return false;
         }
 
+        if (i == 10) {
+            up = false;
+        }
+        else if (i == 0) {
+            up = true;
+        }
+
+        if (up) {
+            i++;
+        }
+        else {
+            i--;
+        }
+
         armorStand.teleport(calcLoc(player).join());
 
         if (particle)
@@ -67,7 +83,7 @@ public class Mascot {
     private CompletableFuture<Location> calcLoc(Player player) {
         return CompletableFuture.supplyAsync(() -> {
             Location location = player.getLocation();
-            double x = location.getX(), y = location.getY(), z = location.getZ();
+            double x = location.getX(), y = location.getY() - 0.35, z = location.getZ();
             float yaw = location.getYaw();
 
             // Calcular la dirección en la que está mirando el jugador
@@ -76,7 +92,12 @@ public class Mascot {
             // Calcular la ubicación detrás del jugador
             double teleportX = x + (xDirection * -1), teleportZ = z + (zDirection * -1);
 
-            return new Location(location.getWorld(), teleportX, y, teleportZ, yaw, 0);
+            // Calcular el movimiento en Y para mas smooth
+            double teleportY = y + (i * 0.075);
+
+            return new Location(location.getWorld(), teleportX, teleportY, teleportZ, yaw, 0);
+        });
+    }
 
     private CompletableFuture<Void> playParticles() {
         return CompletableFuture.runAsync(() -> {
