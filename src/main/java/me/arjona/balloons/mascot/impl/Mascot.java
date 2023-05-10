@@ -58,19 +58,12 @@ public class Mascot {
             return false;
         }
 
-        if (i == 10) {
-            up = false;
-        }
-        else if (i == 0) {
-            up = true;
-        }
+        // Max of ticks
+        if (i == 10) up = false;
+        else if (i == 0) up = true;
 
-        if (up) {
-            i++;
-        }
-        else {
-            i--;
-        }
+        if (up) i++;
+        else i--;
 
         armorStand.teleport(calcLoc(player).join());
 
