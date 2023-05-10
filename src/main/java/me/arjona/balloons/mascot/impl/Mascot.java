@@ -30,7 +30,7 @@ public class Mascot {
         if (body != null) this.body = body;
         else this.body = plugin.getMascotManager().getDefaultBody();
 
-        this.armorStand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
+        this.armorStand = player.getWorld().spawn(calcLoc(player).join(), ArmorStand.class);
 
         // invulnerable
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
