@@ -4,13 +4,8 @@ import com.jonahseguin.drink.annotation.Command;
 import com.jonahseguin.drink.annotation.Sender;
 import lombok.RequiredArgsConstructor;
 import me.arjona.balloons.Main;
-import me.arjona.balloons.mascot.impl.Mascot;
-import me.arjona.balloons.mascot.impl.Body;
 import me.arjona.balloons.mascot.menu.SelectMascotMenu;
-import me.arjona.customutilities.CC;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 @RequiredArgsConstructor
 public class TestCommand {

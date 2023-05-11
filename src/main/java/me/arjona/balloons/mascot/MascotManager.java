@@ -1,7 +1,7 @@
 package me.arjona.balloons.mascot;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import lombok.Getter;
 import me.arjona.balloons.Main;
 import me.arjona.balloons.mascot.impl.Body;
@@ -10,13 +10,14 @@ import me.arjona.balloons.mascot.impl.Mascot;
 import me.arjona.balloons.mascot.listener.MascotListener;
 import me.arjona.balloons.mascot.task.MascotRunnable;
 import me.arjona.customutilities.Logger;
+import me.arjona.customutilities.compatibility.particle.Particle;
 import me.arjona.customutilities.serializer.ItemStackSerializer;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -25,7 +26,7 @@ public class MascotManager {
     private final Map<UUID, Mascot> mascots;
     private final MascotRunnable mascotRunnable;
 
-    private final Set<Body> bodies = Sets.newConcurrentHashSet();
+    private final List<Body> bodies = Lists.newArrayList();
 
     public MascotManager(Main plugin) {
         mascots = Maps.newHashMap();
@@ -47,7 +48,7 @@ public class MascotManager {
                 try {
                     Heads head = new Heads(config.getString(path + "texture"));
 
-                    ItemStack chestPlate = null;
+                    ItemStack chestPlate = new ItemStack(Material.LEATHER_CHESTPLATE);
                     if (config.contains(path + "chestplate")) {
                         try {
                             chestPlate = ItemStackSerializer.itemFrom64(config.getString(path + "chestplate"));
@@ -56,7 +57,19 @@ public class MascotManager {
                         }
                     }
 
-                    bodies.add(new Body(head, s.replace("_", " "), config.getString(path + "displayName"), chestPlate));
+                    Body body = new Body(head, s.replace("_", " "), config.getString(path + "displayName"), chestPlate);
+
+                    if (config.contains(path + "particle")) {
+                        body.setParticle(true);
+
+                        try {
+                            body.setParticleEffect(Particle.fromName(config.getString(path + "particle")));
+                        } catch (Exception e) {
+                            throw new RuntimeException("Failed to deserialize particle for " + key + "." + s);
+                        }
+                    }
+
+                    bodies.add(body);
                     Logger.deb("Loaded mascot " + key + "." + s);
                 } catch (Exception e) {
                     e.printStackTrace();
