@@ -4,26 +4,39 @@ import com.jonahseguin.drink.CommandService;
 import com.jonahseguin.drink.Drink;
 import com.jonahseguin.drink.provider.spigot.CommandSenderProvider;
 import com.jonahseguin.drink.provider.spigot.PlayerProvider;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.MongoException;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.internal.connection.MongoCredentialWithCache;
 import lombok.Getter;
 import me.arjona.balloons.commands.TestCommand;
 import me.arjona.balloons.mascot.MascotManager;
+import me.arjona.customutilities.Logger;
 import me.arjona.customutilities.file.FileConfig;
 import me.arjona.customutilities.menu.listener.MenuListener;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Arrays;
+
 @Getter
 public class Main extends JavaPlugin implements CommandExecutor {
 
-    private FileConfig balloonConfig, messagesConfig;
+    private MongoClient mongoClient;
+    private MongoDatabase database;
+
+    private FileConfig databaseConfig, balloonConfig, messagesConfig;
 
     private MascotManager mascotManager;
 
     @Override
     public void onEnable() {
         registerConfig();
+        initDatabase();
 
         registerManagers();
         registerListener();
@@ -31,6 +44,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
     }
 
     private void registerConfig() {
+        this.databaseConfig = new FileConfig(this, "database.yml");
         this.balloonConfig = new FileConfig(this, "balloons.yml");
         this.messagesConfig = new FileConfig(this, "messages.yml");
     }
@@ -55,4 +69,24 @@ public class Main extends JavaPlugin implements CommandExecutor {
         drink.registerCommands();
     }
 
+    private void initDatabase() {
+        try {
+            MongoClientURI uri = new MongoClientURI(this.databaseConfig.getString("mongodb_uri"));
+
+            if (uri.getDatabase() == null) {
+                Logger.err("&cDatabase name is not set in the URI.");
+                Bukkit.getServer().shutdown();
+                return;
+            }
+
+            this.mongoClient = new MongoClient(uri);
+            this.database = mongoClient.getDatabase(uri.getDatabase());
+
+            Logger.log("MongoDB connection successfully.");
+        }
+        catch (MongoException | IllegalArgumentException | NullPointerException exception) {
+            Logger.log("MongoDB failed to connect.");
+            Bukkit.getServer().shutdown();
+        }
+    }
 }

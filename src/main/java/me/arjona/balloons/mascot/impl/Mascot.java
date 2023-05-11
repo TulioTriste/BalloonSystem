@@ -3,6 +3,7 @@ package me.arjona.balloons.mascot.impl;
 import lombok.Getter;
 import me.arjona.balloons.Main;
 import me.arjona.customutilities.CC;
+import me.arjona.customutilities.compatibility.particle.Particle;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -97,7 +98,7 @@ public class Mascot {
     private CompletableFuture<Void> playParticles() {
         return CompletableFuture.runAsync(() -> {
             Location location = armorStand.getLocation().add(0, 0.3, 0);
-            location.getWorld().spigot().playEffect(location, Effect.CLOUD, 0, 0, 0, 0, 0, 0, 1, 1);
+            body.getParticleEffect().display(0, 0, 0, 0, 1, location, 30);
         });
     }
 
