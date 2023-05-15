@@ -7,11 +7,12 @@ import com.jonahseguin.drink.provider.spigot.PlayerProvider;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoException;
+import com.mongodb.MongoSocketOpenException;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.internal.connection.MongoCredentialWithCache;
 import lombok.Getter;
 import me.arjona.balloons.commands.TestCommand;
 import me.arjona.balloons.mascot.MascotManager;
+import me.arjona.balloons.profile.ProfileManager;
 import me.arjona.customutilities.Logger;
 import me.arjona.customutilities.file.FileConfig;
 import me.arjona.customutilities.menu.listener.MenuListener;
@@ -21,17 +22,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
+import java.net.ConnectException;
 
 @Getter
 public class Main extends JavaPlugin implements CommandExecutor {
 
     private MongoClient mongoClient;
-    private MongoDatabase database;
+    private MongoDatabase mongoDatabase;
 
     private FileConfig databaseConfig, balloonConfig, messagesConfig;
 
     private MascotManager mascotManager;
+    private ProfileManager profileManager;
 
     @Override
     public void onEnable() {
@@ -80,11 +82,11 @@ public class Main extends JavaPlugin implements CommandExecutor {
             }
 
             this.mongoClient = new MongoClient(uri);
-            this.database = mongoClient.getDatabase(uri.getDatabase());
+            this.mongoDatabase = mongoClient.getDatabase(uri.getDatabase());
 
             Logger.log("MongoDB connection successfully.");
         }
-        catch (MongoException | IllegalArgumentException | NullPointerException exception) {
+        catch (MongoException | IllegalArgumentException | NullPointerException ignored) {
             Logger.log("MongoDB failed to connect.");
             Bukkit.getServer().shutdown();
         }

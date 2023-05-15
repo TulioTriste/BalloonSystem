@@ -90,6 +90,10 @@ public class MascotManager {
         return isUsing(uuid) && mascots.get(uuid).getBody().getName().equalsIgnoreCase(name);
     }
 
+    public boolean isValid(String name) {
+        return bodies.stream().anyMatch(body -> body.getName().equalsIgnoreCase(name));
+    }
+
     public Body getDefaultBody() {
         return new Body(
                 new Heads(

@@ -30,7 +30,7 @@ public class CreateBalloonMenu extends Menu {
     public Map<Integer, Button> getButtons(Player player) {
         Map<Integer, Button> buttons = Maps.newHashMap();
 
-        buttons.put(getSlot(4, 1), new HeadButton());
+        //buttons.put(getSlot(4, 1), new HeadButton());
 
         return buttons;
     }
