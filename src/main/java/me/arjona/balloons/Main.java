@@ -7,11 +7,11 @@ import com.jonahseguin.drink.provider.spigot.PlayerProvider;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoException;
-import com.mongodb.MongoSocketOpenException;
 import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
 import me.arjona.balloons.commands.TestCommand;
 import me.arjona.balloons.mascot.MascotManager;
+import me.arjona.balloons.profile.Profile;
 import me.arjona.balloons.profile.ProfileManager;
 import me.arjona.customutilities.Logger;
 import me.arjona.customutilities.file.FileConfig;
@@ -21,8 +21,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.net.ConnectException;
 
 @Getter
 public class Main extends JavaPlugin implements CommandExecutor {
@@ -52,6 +50,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
     }
 
     private void registerManagers() {
+        this.profileManager = new ProfileManager(this);
         this.mascotManager = new MascotManager(this);
     }
 

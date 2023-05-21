@@ -23,12 +23,15 @@ import java.util.UUID;
 @Getter
 public class MascotManager {
 
+    private final Main plugin;
+
     private final Map<UUID, Mascot> mascots;
     private final MascotRunnable mascotRunnable;
 
     private final List<Body> bodies = Lists.newArrayList();
 
     public MascotManager(Main plugin) {
+        this.plugin = plugin;
         mascots = Maps.newHashMap();
 
         init(plugin);
@@ -79,6 +82,7 @@ public class MascotManager {
     }
 
     public void setMascot(UUID uuid, Mascot mascot) {
+        plugin.getProfileManager().getProfile(uuid).setMascotBody(mascot.getBody().getName());
         mascots.put(uuid, mascot);
     }
 
@@ -92,6 +96,10 @@ public class MascotManager {
 
     public boolean isValid(String name) {
         return bodies.stream().anyMatch(body -> body.getName().equalsIgnoreCase(name));
+    }
+
+    public Body getBody(String name) {
+        return bodies.stream().filter(body -> body.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
     public Body getDefaultBody() {

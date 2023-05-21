@@ -1,45 +1,53 @@
 package me.arjona.balloons.profile;
 
+import com.google.common.collect.Maps;
 import com.mongodb.client.MongoCollection;
 import lombok.Getter;
 import me.arjona.balloons.Main;
 import me.arjona.balloons.profile.listener.ProfileListener;
 import org.bson.Document;
+import org.bukkit.Bukkit;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.UUID;
 
 @Getter
 public class ProfileManager {
 
     private final MongoCollection<Document> mongoCollection;
 
+    private final LinkedHashMap<UUID, Profile> profiles;
+
     public ProfileManager(Main plugin) {
         this.mongoCollection = plugin.getMongoDatabase().getCollection("profiles");
+        this.profiles = Maps.newLinkedHashMap();
 
         plugin.getServer().getPluginManager().registerEvents(new ProfileListener(plugin), plugin);
     }
 
-    /*public Profile loadProfile(Main plugin, UUID uuid, String name) {
-        Document document = mongoCollection.find(Filters.eq("uuid", uuid.toString())).first();
-
-        if (document == null) {
-            return new Profile(uuid, name);
-        }
-
-        return loadProfile(plugin, document);
+    public Profile getProfile(String name) {
+        return profiles.values().stream().filter(profile -> profile.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
-    public Profile loadProfile(Main plugin, Document document) {
-        UUID uuid = UUID.fromString(document.getString("uuid"));
-        String name = document.getString("name");
+    public Profile getProfile(UUID uuid) {
+        return profiles.get(uuid);
+    }
 
-        Profile profile = new Profile(uuid, name);
+    public Profile getOrLoadProfile(Main plugin, UUID uuid) {
+        if (profiles.containsKey(uuid)) return profiles.get(uuid);
 
-        if (document.containsKey("mascot")) {
-            String mascot = document.getString("mascot");
-            if (plugin.getMascotManager().isValid(mascot)) {
-                profile.setMascot(mascot);
-            }
+        Document document = mongoCollection.find(new Document("uuid", uuid.toString())).first();
+
+        Profile profile = new Profile(uuid);
+
+        if (document == null) {
+            profile.save(plugin);
         }
 
+        profile.load(plugin);
+        profiles.put(uuid, profile);
         return profile;
-    }*/
+    }
 }

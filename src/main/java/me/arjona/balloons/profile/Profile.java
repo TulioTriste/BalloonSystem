@@ -16,9 +16,9 @@ import java.util.UUID;
 public class Profile {
 
     @NonNull private final UUID uuid;
-    @NonNull private final String name;
+    private String name;
 
-    private String mascot;
+    private String mascotBody;
 
     public void load(Main plugin) {
         Document document = plugin.getProfileManager().getMongoCollection().find(Filters.eq("uuid", uuid.toString())).first();
@@ -29,10 +29,10 @@ public class Profile {
             return;
         }
 
-        if (document.containsKey("mascot")) {
-            String mascot = document.getString("mascot");
-            if (plugin.getMascotManager().isValid(mascot)) {
-                this.mascot = mascot;
+        if (document.containsKey("mascotBody")) {
+            String body = document.getString("mascotBody");
+            if (plugin.getMascotManager().isValid(body)) {
+                this.mascotBody = body;
             }
         }
     }
@@ -41,8 +41,8 @@ public class Profile {
         Document document = new Document("uuid", uuid.toString())
                 .append("name", name);
 
-        if (mascot != null) {
-            document.append("mascot", mascot);
+        if (mascotBody != null) {
+            document.append("mascotBody", mascotBody);
         }
 
         plugin.getProfileManager().getMongoCollection().replaceOne(
