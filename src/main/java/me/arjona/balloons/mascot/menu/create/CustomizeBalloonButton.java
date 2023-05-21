@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @RequiredArgsConstructor
-public class CreateBalloon extends Button {
+public class CustomizeBalloonButton extends Button {
 
     @Override
     public ItemStack getButtonItem(Player player) {

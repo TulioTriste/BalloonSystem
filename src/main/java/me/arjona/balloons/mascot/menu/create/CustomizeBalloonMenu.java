@@ -10,11 +10,13 @@ import me.arjona.customutilities.menu.Button;
 import me.arjona.customutilities.menu.Menu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
 
 import java.util.Map;
 
-public class CreateBalloonMenu extends Menu {
+public class CustomizeBalloonMenu extends Menu {
 
     @Override
     public int getSize() {
@@ -30,7 +32,7 @@ public class CreateBalloonMenu extends Menu {
     public Map<Integer, Button> getButtons(Player player) {
         Map<Integer, Button> buttons = Maps.newHashMap();
 
-        //buttons.put(getSlot(4, 1), new HeadButton());
+        buttons.put(getSlot(4, 1), new HeadButton());
 
         return buttons;
     }
@@ -42,13 +44,22 @@ public class CreateBalloonMenu extends Menu {
 
         @Override
         public ItemStack getButtonItem(Player player) {
-            Material skull = CompatibleMaterial.HUMAN_SKULL.getMaterial();
             return new ItemBuilder(CompatibleMaterial.HUMAN_SKULL.getMaterial())
                     .name(CC.GREEN + CC.BOLD + "Head")
                     .lore("",
                             "&6Left-Click to create a Custom Head",
                             "&6Right-Click with a head in your hand to select it")
                     .build();
+        }
+
+        @Override
+        public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
+            ItemStack book = new ItemStack(Material.BOOK_AND_QUILL);
+            BookMeta meta = (BookMeta) book.getItemMeta();
+
+            meta.setDisplayName(CC.GREEN + CC.BOLD + "Create a balloon");
+            meta.setAuthor("Arjona");
+            meta.setPages("Remove this and insert your texture.");
         }
     }
 }
