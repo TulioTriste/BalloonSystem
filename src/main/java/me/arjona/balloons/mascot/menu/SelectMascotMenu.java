@@ -11,6 +11,7 @@ import me.arjona.customutilities.item.ItemBuilder;
 import me.arjona.customutilities.menu.Button;
 import me.arjona.customutilities.menu.pagination.PageButton;
 import me.arjona.customutilities.menu.pagination.PaginatedMenu;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -51,6 +52,26 @@ public class SelectMascotMenu extends PaginatedMenu {
         buttons.put(getSlot(0, 3), new PageButton(-1, this));
         buttons.put(getSlot(8, 3), new PageButton(1, this));
 
+        buttons.put(getSlot(4, 3), new Button() {
+            @Override
+            public ItemStack getButtonItem(Player player) {
+                return new ItemBuilder(Material.BARRIER)
+                        .name(CC.RED + "Remove Mascot")
+                        .build();
+            }
+
+            @Override
+            public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
+                if (!mascotManager.hasMascot(player.getUniqueId())) {
+                    player.sendMessage(CC.RED + "You do not have a mascot.");
+                    return;
+                }
+                mascotManager.removeMascot(player.getUniqueId());
+                player.sendMessage(CC.GREEN + "You have removed your mascot.");
+                player.closeInventory();
+            }
+        });
+
         return buttons;
     }
 
@@ -58,7 +79,7 @@ public class SelectMascotMenu extends PaginatedMenu {
     public Map<Integer, Button> getAllPagesButtons(Player player) {
         Map<Integer, Button> buttons = Maps.newHashMap();
 
-        for (Body body : mascotManager.getBodies()) {
+        for (Body body : mascotManager.getSetBodies()) {
             buttons.put(buttons.size(), new MascotButton(body));
         }
 

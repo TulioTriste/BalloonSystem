@@ -22,6 +22,6 @@ mascots_message:
   unequipped:
     - "&cYou are already using this Mascot!"
   equip:
-    - "&aYou are now using the &6{name} &aMascot!"
+    - "&aYou are now using the &6{mascot} &aMascot!"
   remove:
     - "&cYou are no longer using a Mascot!"

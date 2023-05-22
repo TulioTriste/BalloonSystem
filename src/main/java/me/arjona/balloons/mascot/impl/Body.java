@@ -2,7 +2,6 @@ package me.arjona.balloons.mascot.impl;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import me.arjona.customutilities.CC;

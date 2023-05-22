@@ -28,11 +28,19 @@ public class MascotManager {
     private final Map<UUID, Mascot> mascots;
     private final MascotRunnable mascotRunnable;
 
-    private final List<Body> bodies = Lists.newArrayList();
+    private final List<Body> setBodies;
+
+    private final Map<String , ItemStack> bodies;
+    private final List<Heads> heads;
+    private final List<Particle> particles;
 
     public MascotManager(Main plugin) {
         this.plugin = plugin;
         mascots = Maps.newHashMap();
+        setBodies = Lists.newArrayList();
+        bodies = Maps.newHashMap();
+        heads = Lists.newArrayList();
+        particles = Lists.newArrayList();
 
         init(plugin);
 
@@ -72,7 +80,7 @@ public class MascotManager {
                         }
                     }
 
-                    bodies.add(body);
+                    setBodies.add(body);
                     Logger.deb("Loaded mascot " + key + "." + s);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -81,25 +89,45 @@ public class MascotManager {
         }
     }
 
+    /*private void loadHeads(Main plugin) {
+        FileConfiguration config = plugin.getBalloonConfig().getConfiguration();
+
+        for (String heads : config.getConfigurationSection("Heads").getKeys(false)) {
+            String path = "Heads." + heads + ".";
+            try {
+                Heads head = new Heads(config.getString(path + "texture"), heads, config.getString(path + "displayName"));
+                this.heads.add(head);
+                Logger.deb("Loaded head " + heads);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }*/
+
     public void setMascot(UUID uuid, Mascot mascot) {
         plugin.getProfileManager().getProfile(uuid).setMascotBody(mascot.getBody().getName());
         mascots.put(uuid, mascot);
     }
 
-    public boolean isUsing(UUID uuid) {
+    public void removeMascot(UUID uuid) {
+        plugin.getProfileManager().getProfile(uuid).setMascotBody(null);
+        mascots.get(uuid).die();
+    }
+
+    public boolean hasMascot(UUID uuid) {
         return mascots.containsKey(uuid);
     }
 
     public boolean isSpecificUsing(UUID uuid, String name) {
-        return isUsing(uuid) && mascots.get(uuid).getBody().getName().equalsIgnoreCase(name);
+        return hasMascot(uuid) && mascots.get(uuid).getBody().getName().equalsIgnoreCase(name);
     }
 
     public boolean isValid(String name) {
-        return bodies.stream().anyMatch(body -> body.getName().equalsIgnoreCase(name));
+        return setBodies.stream().anyMatch(body -> body.getName().equalsIgnoreCase(name));
     }
 
     public Body getBody(String name) {
-        return bodies.stream().filter(body -> body.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+        return setBodies.stream().filter(body -> body.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
     public Body getDefaultBody() {

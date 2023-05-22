@@ -9,9 +9,8 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
-import me.arjona.balloons.commands.TestCommand;
+import me.arjona.balloons.commands.MascotsCommand;
 import me.arjona.balloons.mascot.MascotManager;
-import me.arjona.balloons.profile.Profile;
 import me.arjona.balloons.profile.ProfileManager;
 import me.arjona.customutilities.Logger;
 import me.arjona.customutilities.file.FileConfig;
@@ -65,7 +64,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
         drink.bind(Player.class).toProvider(new PlayerProvider(this));
         drink.bind(CommandSender.class).toProvider(new CommandSenderProvider());
 
-        drink.register(new TestCommand(), "testcmd");
+        drink.register(new MascotsCommand(), "testcmd");
 
         drink.registerCommands();
     }

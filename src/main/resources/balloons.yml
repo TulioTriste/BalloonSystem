@@ -1,25 +1,5 @@
-# Follow this format
-#
-# <balloon category 1>:
-#   <balloon name 1>:
-#     displayName: <balloon displayName>
-#     chestPlate: <balloon chestplate material>
-#     texture: <balloon texture>
-#     particle: <balloon particle> # You can usage one of these options https://pastebin.com/CqxDxZF0. If you want to disable the particle, just remove this line
-#   <balloon name 2>:
-#     displayName: <balloon displayName>
-#     chestPlate: <balloon chestplate material>
-#     texture: <balloon texture>
-# <balloon category 2>:
-#   <balloon name 1>:
-#     displayName: <balloon displayName>
-#     chestPlate: <balloon chestplate material>
-#     texture: <balloon texture>
-#   <balloon name 2>:
-#     displayName: <balloon displayName>
-#     chestPlate: <balloon chestplate material>
-#     texture: <balloon texture>
-
+# particle: <balloon particle> # You can usage one of these options https://pastebin.com/CqxDxZF0.
+# If you want to disable the particle, just remove this line
 Balloons:
   Red_Balloon:
     displayName: "&cRed Balloon"
