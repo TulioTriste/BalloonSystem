@@ -1,9 +1,9 @@
-package me.arjona.balloons.profile.listener;
+package me.arjona.balloons.generic_profile.listener;
 
 import lombok.RequiredArgsConstructor;
 import me.arjona.balloons.Main;
 import me.arjona.balloons.mascot.impl.Mascot;
-import me.arjona.balloons.profile.Profile;
+import me.arjona.balloons.generic_profile.Profile;
 import me.arjona.customutilities.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +27,7 @@ public class ProfileListener implements Listener {
 
             profile.setName(event.getPlayer().getName());
 
-            profile.load(plugin);
+            //profile.load(plugin);
 
             plugin.getProfileManager().getProfiles().put(event.getPlayer().getUniqueId(), profile);
 
@@ -49,8 +49,7 @@ public class ProfileListener implements Listener {
         }
 
         if (profile.getMascotBody() != null) {
-            plugin.getMascotManager().setMascot(player.getUniqueId(),
-                    new Mascot(plugin, player, plugin.getMascotManager().getBody(profile.getMascotBody())));
+            profile.applyMascot(plugin, player, profile.getMascotBody());
         }
     }
 
@@ -60,9 +59,9 @@ public class ProfileListener implements Listener {
 
         if (profile == null) return;
 
-        profile.save(plugin);
+        profile.removeMascot();
 
-        Logger.log("Saved profile for " + profile.getName() + ".");
+        //profile.save(plugin);
     }
 
 }

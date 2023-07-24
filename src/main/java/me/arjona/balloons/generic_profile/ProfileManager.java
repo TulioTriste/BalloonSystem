@@ -1,27 +1,22 @@
-package me.arjona.balloons.profile;
+package me.arjona.balloons.generic_profile;
 
 import com.google.common.collect.Maps;
-import com.mongodb.client.MongoCollection;
 import lombok.Getter;
 import me.arjona.balloons.Main;
-import me.arjona.balloons.profile.listener.ProfileListener;
-import org.bson.Document;
-import org.bukkit.Bukkit;
+import me.arjona.balloons.generic_profile.listener.ProfileListener;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.UUID;
 
 @Getter
 public class ProfileManager {
 
-    private final MongoCollection<Document> mongoCollection;
+    //private final MongoCollection<Document> mongoCollection;
 
     private final LinkedHashMap<UUID, Profile> profiles;
 
     public ProfileManager(Main plugin) {
-        this.mongoCollection = plugin.getMongoDatabase().getCollection("profiles");
+        //this.mongoCollection = plugin.getMongoDatabase().getCollection("profiles");
         this.profiles = Maps.newLinkedHashMap();
 
         plugin.getServer().getPluginManager().registerEvents(new ProfileListener(plugin), plugin);
@@ -35,7 +30,7 @@ public class ProfileManager {
         return profiles.get(uuid);
     }
 
-    public Profile getOrLoadProfile(Main plugin, UUID uuid) {
+    /*public Profile getOrLoadProfile(Main plugin, UUID uuid) {
         if (profiles.containsKey(uuid)) return profiles.get(uuid);
 
         Document document = mongoCollection.find(new Document("uuid", uuid.toString())).first();
@@ -49,5 +44,5 @@ public class ProfileManager {
         profile.load(plugin);
         profiles.put(uuid, profile);
         return profile;
-    }
+    }*/
 }

@@ -4,18 +4,12 @@ import com.jonahseguin.drink.CommandService;
 import com.jonahseguin.drink.Drink;
 import com.jonahseguin.drink.provider.spigot.CommandSenderProvider;
 import com.jonahseguin.drink.provider.spigot.PlayerProvider;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.MongoException;
-import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
 import me.arjona.balloons.commands.MascotsCommand;
 import me.arjona.balloons.mascot.MascotManager;
-import me.arjona.balloons.profile.ProfileManager;
-import me.arjona.customutilities.Logger;
+import me.arjona.balloons.generic_profile.ProfileManager;
 import me.arjona.customutilities.file.FileConfig;
 import me.arjona.customutilities.menu.listener.MenuListener;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -24,10 +18,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 @Getter
 public class Main extends JavaPlugin implements CommandExecutor {
 
-    private MongoClient mongoClient;
-    private MongoDatabase mongoDatabase;
+    /*private MongoClient mongoClient;
+    private MongoDatabase mongoDatabase;*/
 
-    private FileConfig databaseConfig, balloonConfig, messagesConfig;
+    private FileConfig databaseConfig, mascotsConfig, messagesConfig;
 
     private MascotManager mascotManager;
     private ProfileManager profileManager;
@@ -35,7 +29,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
     @Override
     public void onEnable() {
         registerConfig();
-        initDatabase();
+        //initDatabase();
 
         registerManagers();
         registerListener();
@@ -44,7 +38,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
 
     private void registerConfig() {
         this.databaseConfig = new FileConfig(this, "database.yml");
-        this.balloonConfig = new FileConfig(this, "balloons.yml");
+        this.mascotsConfig = new FileConfig(this, "mascots.yml");
         this.messagesConfig = new FileConfig(this, "messages.yml");
     }
 
@@ -69,7 +63,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
         drink.registerCommands();
     }
 
-    private void initDatabase() {
+    /*private void initDatabase() {
         try {
             MongoClientURI uri = new MongoClientURI(this.databaseConfig.getString("mongodb_uri"));
 
@@ -88,5 +82,5 @@ public class Main extends JavaPlugin implements CommandExecutor {
             Logger.log("MongoDB failed to connect.");
             Bukkit.getServer().shutdown();
         }
-    }
+    }*/
 }
