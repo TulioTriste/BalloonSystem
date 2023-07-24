@@ -60,7 +60,7 @@ public class MascotManager {
                 try {
                     particle = Particle.fromName(config.getString(path + "particle"));
                 } catch (Exception e) {
-                    Logger.err("&cFailed to load particle for " + key);
+                    Logger.err("Failed to load particle for " + key);
                 }
             }
 
@@ -68,7 +68,7 @@ public class MascotManager {
             try {
                 head = new Heads(config.getString(path + "head-texture"));
             } catch (Exception e) {
-                Logger.err("&cFailed to load head for " + key);
+                Logger.err("Failed to load head for " + key);
                 continue;
             }
 
